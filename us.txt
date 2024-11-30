@@ -1,0 +1,7 @@
+As a customer, I want to view available sneakers so that I can choose the ones I like.
+As a customer, I want to add sneakers to my cart so that I can review them before purchasing.
+As a customer, I want to place an order so that I can buy the sneakers I selected.
+
+Là một khách hàng, tôi muốn xem các đôi giày thể thao có sẵn để có thể chọn những đôi mà tôi thích.
+Là một khách hàng, tôi muốn thêm giày thể thao vào giỏ hàng để có thể xem lại trước khi mua.
+Là một khách hàng, tôi muốn đặt hàng để có thể mua những đôi giày mà tôi đã chọn.

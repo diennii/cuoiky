@@ -3,14 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Shop</title>
+    <title>Danh sách sản phẩm</title>
 </head>
 <body>
-    <h1>Welcome to My Shoe Store!</h1>
-    <ul>
-        {% for product in products %}
-            <li>{{ product.Name }} - {{ product.Price }} USD</li>
-        {% endfor %}
-    </ul>
+    <h1>Danh sách sản phẩm</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Danh mục</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product[0] }}</td>
+                <td>{{ product[1] }}</td>
+                <td>{{ product[2] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>

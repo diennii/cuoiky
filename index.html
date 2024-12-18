@@ -1,29 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách sản phẩm</title>
-</head>
-<body>
-    <h1>Danh sách sản phẩm</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Tên sản phẩm</th>
-                <th>Giá</th>
-                <th>Danh mục</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in products %}
-            <tr>
-                <td>{{ product[0] }}</td>
-                <td>{{ product[1] }}</td>
-                <td>{{ product[2] }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Restaurant Management System</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <!-- Thêm phần Header chứa tên cửa hàng -->
+        <header id="header">
+            <img src="logo.jpg" alt="Restaurant Logo" id="logo">
+            <h1>QUẢN LÝ THỨC ĂN TRONG   NHÀ HÀNG</h1>
+        </header>
+        <button onclick="location.href='dashboard-data.php'" id="viewDashboardData">Xem Tổng Doanh Thu</button>
+    </div>
+        <div id="dashboard">
+            
+            <p>Địa chỉ: Đà Nẵng</p>     
+            <p>SĐT: 0865712728</p>
+            <p>Email: 123@example.com</p>
+            <p>Tổng doanh thu cộng thêm:  <span class="revenue">0.00 VND</span></p>
+          <!--   <button id="resetRevenue">Reset</button>      -->  
+          
+
+        <div id="food-management">
+            <h2>Quản Lý Món Ăn</h2>
+            <form id="updateFoodForm">
+                <label for="dishName">Tên món ăn:</label>
+                <select id="dishName">
+                    <option value="1">Pizza Margherita</option>
+                    <option value="2">Spaghetti Bolognese</option>
+                    <option value="3">Burger Cheeseburger</option>
+                    <option value="4">Caesar Salad</option>
+                    <option value="5">Grilled Chicken</option>
+                    <option value="6">Sushi Set </option>
+                </select>
+
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" min="1" value="1">
+
+                <input type="radio" name="operation" value="add" checked> Add to Stock
+                <input type="radio" name="operation" value="serve"> Serve to Customer
+
+                <button type="submit">Gửi</button>
+            </form>
+        </div>
+        <div id="our-menu">
+            <h2>Thực đơn của chúng tôi </h2>
+            <p>
+                <img src="pizza.jpg" alt="Pizza Margherita" />
+                Pizza Margherita - $10.99 - Mô tả: Pizza truyền thống với sốt cà chua, mozzarella, và... 
+                <span id="available-1"></span> 
+            </p>
+            <p>
+                <img src="spaghetti.jpg" alt="Spaghetti Bolognese" />
+                Spaghetti Bolognese - $12.50 - Mô tả: Mì spaghetti với sốt bolognese đậm đà.
+                <span id="available-2"></span>
+            </p>
+            <p>
+                <img src="burger.jpg" alt="Cheeseburger" />
+                Burger Cheeseburger - $8.75 - Mô tả: Burger với phô mai cheddar, thịt bò và rau.
+                <span id="available-3">5</span> món còn lại
+            </p>
+            <p>
+                <img src="salad.jpg" alt="Caesar Salad" />
+                Caesar Salad - $7.50 - Mô tả: Salad với rau diếp, gà nướng, sốt Caesar, và phô m..
+                <span id="available-4"></span>
+            </p>
+            <p>
+                <img src="chicken.jpg" alt="Grilled Chicken" />
+                Grilled Chicken - $15.00 - Mô tả: Gà nướng với gia vị, ăn kèm với rau và cơm
+                <span id="available-5"></span>
+            </p>
+            <p>
+                <img src="sushi.jpg" alt="Sushi Set" />
+                Sushi Set - $18.50 - Mô tả: Sushi với cá hồi tươi, cơm và rong biển.
+                <span id="available-6"></span>
+                <span id="available:6"></span>
+            </p>
+        </div>
+        
+        
+
+        <script src="dashboard.js"></script>
+    </body>
+    </html>

@@ -161,6 +161,24 @@ ALTER TABLE `sales`
   ADD CONSTRAINT `fk_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
   ADD CONSTRAINT `sales_ibfk_1` FOREIGN KEY (`dish_id`) REFERENCES `dishes` (`id`);
 COMMIT;
+-- 4. Cập nhật số lượng món ăn trong kho sau mỗi lần bán
+UPDATE `dishes`
+SET `quantity` = `quantity` - 1, `sold_quantity` = `sold_quantity` + 1, `revenue` = `revenue` + `price`
+WHERE `id` = [dish_id];
+
+-- 5. Lấy thông tin doanh thu từng món ăn
+SELECT `dishes`.`name`, SUM(`sales`.`total_price`) AS `total_revenue`
+FROM `sales`
+JOIN `dishes` ON `sales`.`dish_id` = `dishes`.`id`
+GROUP BY `dishes`.`name`;
+
+-- 6. Lấy thông tin số lượng món ăn đã bán trong ngày
+SELECT `dishes`.`name`, SUM(`sales`.`quantity`) AS `total_sold`
+FROM `sales`
+JOIN `dishes` ON `sales`.`dish_id` = `dishes`.`id`
+WHERE `sales`.`sale_date` = CURDATE()
+GROUP BY `dishes`.`name`;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

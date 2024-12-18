@@ -1,121 +1,167 @@
-CREATE TABLE Users (
-    UserID INT AUTO_INCREMENT PRIMARY KEY,
-    Name VARCHAR(255) NOT NULL,
-    Email VARCHAR(255) UNIQUE NOT NULL,
-    Address VARCHAR(255),
-    Phone VARCHAR(15)
-);
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th12 18, 2024 lúc 04:20 PM
+-- Phiên bản máy phục vụ: 8.0.40
+-- Phiên bản PHP: 8.2.12
 
-CREATE TABLE Categories (
-    CategoryID INT AUTO_INCREMENT PRIMARY KEY,
-    Name VARCHAR(255) NOT NULL
-);
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
-CREATE TABLE Products (
-    ProductID INT AUTO_INCREMENT PRIMARY KEY,
-    Name VARCHAR(255) NOT NULL,
-    Price DECIMAL(10, 2) NOT NULL,
-    Stock INT NOT NULL,
-    CategoryID INT,
-    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)
-);
 
-CREATE TABLE Orders (
-    OrderID INT AUTO_INCREMENT PRIMARY KEY,
-    UserID INT NOT NULL,
-    OrderDate DATETIME DEFAULT CURRENT_TIMESTAMP,
-    TotalPrice DECIMAL(10, 2),
-    DiscountID INT,
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
-);
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
-CREATE TABLE OrderDetails (
-    OrderDetailID INT AUTO_INCREMENT PRIMARY KEY,
-    OrderID INT NOT NULL,
-    ProductID INT NOT NULL,
-    Quantity INT NOT NULL,
-    Price DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
-    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
-);
+--
+-- Cơ sở dữ liệu: `restaurant_management`
 
-CREATE TABLE Payments (
-    PaymentID INT AUTO_INCREMENT PRIMARY KEY,
-    OrderID INT NOT NULL,
-    PaymentDate DATETIME DEFAULT CURRENT_TIMESTAMP,
-    Amount DECIMAL(10, 2) NOT NULL,
-    PaymentMethod VARCHAR(50),
-    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
-);
+-- Cấu trúc bảng cho bảng `dishes`
+--
 
-CREATE TABLE Discounts (
-    DiscountID INT AUTO_INCREMENT PRIMARY KEY,
-    Code VARCHAR(50) UNIQUE NOT NULL,
-    DiscountAmount DECIMAL(10, 2) NOT NULL,
-    ExpirationDate DATE NOT NULL
-);
+CREATE TABLE `dishes` (
+  `id` int NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text,
+  `price` decimal(10,2) NOT NULL,
+  `quantity` int NOT NULL,
+  `sold_quantity` int DEFAULT '0',
+  `revenue` decimal(10,2) DEFAULT '0.00',
+  `category` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE Reviews (
-    ReviewID INT AUTO_INCREMENT PRIMARY KEY,
-    ProductID INT NOT NULL,
-    UserID INT NOT NULL,
-    Rating INT CHECK (Rating BETWEEN 1 AND 5),
-    Comment TEXT,
-    ReviewDate DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
-);
+--
+-- Đang đổ dữ liệu cho bảng `dishes`
+--
 
-CREATE TABLE Shipments (
-    ShipmentID INT AUTO_INCREMENT PRIMARY KEY,
-    OrderID INT NOT NULL,
-    ShipmentDate DATETIME,
-    Status VARCHAR(50),
-    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
-);
--- Thêm người dùng
-INSERT INTO Users (Name, Email, Address, Phone)
-VALUES 
-('Nguyen Van A', 'a@example.com', '123 ABC Street', '0123456789'),
-('Tran Thi B', 'b@example.com', '456 DEF Avenue', '0987654321');
+INSERT INTO `dishes` (`id`, `name`, `description`, `price`, `quantity`, `sold_quantity`, `revenue`, `category`) VALUES
+(1, 'Pizza Margherita', 'Pizza truyền thống với sốt cà chua, mozzarella, và các gia vị', 10.99, 2, 2, 21.98, NULL),
+(2, 'Spaghetti Bolognese', 'Mì spaghetti với sốt bolognese đậm đà', 12.50, 37, 0, 0.00, NULL),
+(3, 'Burger Cheeseburger', 'Burger với phô mai cheddar, thịt bò và rau', 8.75, 94, 0, 0.00, NULL),
+(4, 'Caesar Salad', 'Salad với rau diếp, gà nướng, sốt Caesar, và phô mai parmesan', 7.50, 40, 0, 0.00, NULL),
+(5, 'Grilled Chicken', 'Gà nướng với gia vị, ăn kèm với rau và cơm', 15.00, 20, 0, 0.00, NULL),
+(6, 'Sushi Set', 'Sushi với cá hồi tươi, cơm và rong biển', 18.50, 44, 0, 0.00, NULL);
 
--- Thêm danh mục sản phẩm
-INSERT INTO Categories (Name)
-VALUES 
-('Sports Shoes'),
-('Casual Shoes');
+-- --------------------------------------------------------
 
--- Thêm sản phẩm
-INSERT INTO Products (Name, Price, Stock, CategoryID)
-VALUES 
-('Nike Air Max', 120.00, 50, 1),
-('Adidas Ultraboost', 150.00, 30, 1),
-('Vans Old Skool', 70.00, 40, 2);
+--
+-- Cấu trúc bảng cho bảng `orders`
+--
 
--- Thêm mã giảm giá
-INSERT INTO Discounts (Code, DiscountAmount, ExpirationDate)
-VALUES 
-('DISCOUNT10', 10.00, '2024-12-31'),
-('DISCOUNT20', 20.00, '2024-12-31');
+CREATE TABLE `orders` (
+  `id` int NOT NULL,
+  `dish_id` int DEFAULT NULL,
+  `quantity` int DEFAULT NULL,
+  `guests` int DEFAULT NULL,
+  `order_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Thêm đơn hàng
-INSERT INTO Orders (UserID, TotalPrice, DiscountID)
-VALUES 
-(1, 230.00, 1);
+--
+-- Đang đổ dữ liệu cho bảng `orders`
+--
 
--- Thêm chi tiết đơn hàng
-INSERT INTO OrderDetails (OrderID, ProductID, Quantity, Price)
-VALUES 
-(1, 1, 2, 120.00),
-(1, 2, 1, 150.00);
+INSERT INTO `orders` (`id`, `dish_id`, `quantity`, `guests`, `order_date`) VALUES
+(68, 1, 4, NULL, '2024-12-16'),
+(69, 5, 5, NULL, '2024-12-16'),
+(70, 1, 20, NULL, '2024-12-16'),
+(76, 5, 2, NULL, '2024-12-17'),
+(77, 5, 2, NULL, '2024-12-17'),
+(78, 3, 2, NULL, '2024-12-17'),
+(79, 4, 4, NULL, '2024-12-17'),
+(80, 4, 4, NULL, '2024-12-17'),
+(81, 2, 4, NULL, '2024-12-17');
 
--- Thêm thanh toán
-INSERT INTO Payments (OrderID, Amount, PaymentMethod)
-VALUES 
-(1, 230.00, 'Credit Card');
+-- --------------------------------------------------------
 
--- Thêm đánh giá
-INSERT INTO Reviews (ProductID, UserID, Rating, Comment)
-VALUES 
-(1, 1, 5, 'Great product!'),
-(2, 2, 4, 'Comfortable but a bit pricey.');
+--
+-- Cấu trúc bảng cho bảng `sales`
+--
+
+CREATE TABLE `sales` (
+  `id` int NOT NULL,
+  `dish_id` int NOT NULL,
+  `quantity` int NOT NULL,
+  `total_price` decimal(10,2) NOT NULL,
+  `sale_date` date NOT NULL,
+  `order_id` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `sales`
+--
+
+INSERT INTO `sales` (`id`, `dish_id`, `quantity`, `total_price`, `sale_date`, `order_id`) VALUES
+(1, 1, 2, 21.98, '2024-12-16', NULL);
+
+--
+-- Chỉ mục cho các bảng đã đổ
+--
+
+--
+-- Chỉ mục cho bảng `dishes`
+--
+ALTER TABLE `dishes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `dish_id` (`dish_id`);
+
+--
+-- Chỉ mục cho bảng `sales`
+--
+ALTER TABLE `sales`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `dish_id` (`dish_id`),
+  ADD KEY `fk_order_id` (`order_id`);
+
+--
+-- AUTO_INCREMENT cho các bảng đã đổ
+--
+
+--
+-- AUTO_INCREMENT cho bảng `dishes`
+--
+ALTER TABLE `dishes`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT cho bảng `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+
+--
+-- AUTO_INCREMENT cho bảng `sales`
+--
+ALTER TABLE `sales`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Các ràng buộc cho các bảng đã đổ
+--
+
+--
+-- Các ràng buộc cho bảng `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`dish_id`) REFERENCES `dishes` (`id`);
+
+--
+-- Các ràng buộc cho bảng `sales`
+--
+ALTER TABLE `sales`
+  ADD CONSTRAINT `fk_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+  ADD CONSTRAINT `sales_ibfk_1` FOREIGN KEY (`dish_id`) REFERENCES `dishes` (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

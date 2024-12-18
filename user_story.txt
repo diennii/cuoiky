@@ -1,0 +1,16 @@
+
+
+User Story - Tiếng Việt
+1. Là một quản lý kho, tôi muốn thêm, sửa và xóa các món ăn trong danh sách món ăn để quản lý kho một cách hiệu quả.
+2. Là một nhân viên kho, tôi muốn cập nhật số lượng tồn kho mỗi khi có đơn hàng được thực hiện, để đảm bảo dữ liệu kho luôn chính xác.
+3. Là một nhân viên kho, tôi muốn kiểm tra báo cáo doanh thu từ từng món ăn theo ngày, để theo dõi hiệu quả bán hàng.
+4. Là một quản lý kho, tôi muốn tính toán doanh thu tổng cộng của mỗi món ăn từ các đơn hàng để có cái nhìn tổng quan về hiệu quả kinh doanh.
+5. Là một nhân viên kho, tôi muốn quản lý số lượng món ăn đã bán trong hệ thống để biết được món nào bán chạy, món nào cần bổ sung thêm.
+
+User Story - English
+1. As an inventory manager, I want to add, update, and delete dishes from the menu to effectively manage the inventory.
+2. As an inventory staff, I want to update the stock quantity whenever an order is placed to ensure the inventory data is always accurate.
+3. As an inventory staff, I want to check the revenue report for each dish by date to track the sales performance.
+4. As an inventory manager, I want to calculate the total revenue for each dish from the orders to get an overall view of the business performance.
+5. As an inventory staff, I want to manage the quantity of sold dishes in the system to know which dishes are popular and which ones need to be restocked.
+
